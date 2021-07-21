@@ -1,4 +1,4 @@
-# PURPOSE - This program creates a GUI that allows the user to easily use OperateExchange.py to create, modify, and cancel array orders
+# PURPOSE - This program creates a GUI that allows the user to easily create, modify, and cancel array orders on cryptocurrency exchanges
 
 import tkinter
 import tkinter.font as font
