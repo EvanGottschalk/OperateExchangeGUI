@@ -297,14 +297,14 @@ class OperateExchangeGUI:
         self.entry_change_steepness = tkinter.Entry(self.GUI, font=self.entry_font, justify='center', width=16, bd=3)
         self.button_change_steepness = tkinter.Button(self.GUI, font=self.button_font, bg=self.current_exchange_colors['Dark Blue'], fg=self.current_exchange_colors['White'], \
                                                    activebackground=self.current_exchange_colors['Active Dark Blue'], activeforeground=self.current_exchange_colors['White'], \
-                                                   padx=8, text='    Update Steepness    ', command=self.changeSteepness)
+                                                   padx=1, text='      Update Steepness      ', command=self.changeSteepness)
     # Slope Input
         self.label_current_slope_title = tkinter.Label(self.GUI, font=self.label_font, bg=self.current_exchange_colors['White'], text='Slope: ')
         self.label_current_slope = tkinter.Label(self.GUI, font=self.current_value_font, bg=self.current_exchange_colors['Light Blue'], text=' ' + str(self.OE.arrayOrderSettings['Slope']) + ' ')
         self.entry_change_slope = tkinter.Entry(self.GUI, font=self.entry_font, justify='center', width=16, bd=3)
         self.button_change_slope = tkinter.Button(self.GUI, font=self.button_font, bg=self.current_exchange_colors['Dark Blue'], fg=self.current_exchange_colors['White'], \
                                                    activebackground=self.current_exchange_colors['Active Dark Blue'], activeforeground=self.current_exchange_colors['White'], \
-                                                   padx=8, text='    Update Slope    ', command=self.changeSlope)
+                                                   padx=10, text='        Update Slope        ', command=self.changeSlope)
     # Minimum Order Size Input
         if self.row_17_button == 'Minimum Order Size':
             self.label_current_minimum_order_size_title = tkinter.Label(self.GUI, font=self.label_font, bg=self.current_exchange_colors['White'], text='Minimum Order: ')
