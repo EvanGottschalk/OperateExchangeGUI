@@ -53,7 +53,8 @@ class OperateExchangeGUI:
                           'Indigo': '#6600ff', \
                           'Purple': '#9900ff', \
                           'Lavender': '#c9a6ff', \
-                          'Salmon': '#ffa6b5'}
+                          'Salmon': '#ffa6b5', \
+                          'DOGE Brown': '#B69A35'}
         self.green_colors = {5: '#f2fff2', \
                             10: '#e6ffe6', \
                             15: '#d7fcd7', \
@@ -68,7 +69,28 @@ class OperateExchangeGUI:
                            30: '#ffb3b3'}
         self.symbol_colors = {'BTC/USD': '#F7931A', \
                               'ETH/USD': '#FFFF00', \
-                              'LTC/USD': self.my_colors['Gray']}
+                              'LTC/USD': self.my_colors['Gray'], \
+                              'DOGE/USD': self.my_colors['DOGE Brown']}
+        self.symbol_defaults = {'BTC': {'Amount': 5000, \
+                                        'Price': 30000, \
+                                        'Granularity': 50, \
+                                        'Spread': 2000, \
+                                        'End Price': 28000}, \
+                                'ETH': {'Amount': 20, \
+                                        'Price': 2000, \
+                                        'Granularity': .1, \
+                                        'Spread': 50, \
+                                        'End Price': 1950}, \
+                                'LTC': {'Amount': 20, \
+                                        'Price': 100, \
+                                        'Granularity': .5, \
+                                        'Spread': 10, \
+                                        'End Price': 90}, \
+                                'DOGE': {'Amount': 20, \
+                                        'Price': .18, \
+                                        'Granularity': .001, \
+                                        'Spread': .01, \
+                                        'End Price': .17}}
         self.account_colors = {'Main': self.my_colors['White'], \
                                'Short 50x': self.my_colors['Pink'], \
                                'Long 50x': self.my_colors['Teal'], \
@@ -221,6 +243,7 @@ class OperateExchangeGUI:
         self.menubutton_symbol.menu.add_radiobutton(label='BTC/USD', command=self.changeSymbol_BTC)
         self.menubutton_symbol.menu.add_radiobutton(label='ETH/USD', command=self.changeSymbol_ETH)
         self.menubutton_symbol.menu.add_radiobutton(label='LTC/USD', command=self.changeSymbol_LTC)
+        self.menubutton_symbol.menu.add_radiobutton(label='DOGE/USD', command=self.changeSymbol_DOGE)
         self.menubutton_symbol.menu.add_radiobutton(label='LINK/USD', command=self.changeSymbol_LINK)
         self.menubutton_symbol.menu.add_radiobutton(label='ADA/USD', command=self.changeSymbol_ADA)
         self.menubutton_symbol.menu.add_radiobutton(label='UNI/USD', command=self.changeSymbol_UNI)
@@ -1300,6 +1323,9 @@ class OperateExchangeGUI:
 
     def changeSymbol_LTC(self):
         self.changeSymbol('LTC/USD')
+
+    def changeSymbol_DOGE(self):
+        self.changeSymbol('DOGE/USD')
         
     def changeSymbol_LINK(self):
         self.changeSymbol('LINK/USD')

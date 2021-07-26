@@ -29,10 +29,10 @@ class OperateExchange:
                               'Side': 'sell', \
                               'Amount': 5000, \
                               'Order Type': 'Limit', \
-                              'Price': 39000}
+                              'Price': 30000}
         self.arrayOrderSettings = {'Granularity': 50, \
                                    'Spread': 2000, \
-                                   'End Price': 37000, \
+                                   'End Price': 28000, \
                                    'Steepness': 0, \
                                    'Slope': 1, \
                                    'Minimum Order Size': 1, \
@@ -110,7 +110,10 @@ class OperateExchange:
         try:
             symbol_input = str(symbol_input)
             if not(symbol_input in self.CTE.availableSymbols[self.CTE.exchange_name]):
-                symbol_input = False
+                if symbol_input == 'DOGE/USD':
+                    self.CTE.availableSymbols[self.CTE.exchange_name].append('DOGE/USD')
+                else:
+                    symbol_input = False
         except:
             symbol_input = False
         return(symbol_input)
@@ -170,6 +173,8 @@ class OperateExchange:
                     price_input = False
             elif symbol == 'LTC' or symbol == 'LTC/USD' or symbol == 'LTC/USDT':
                 price_input = round(float(price_input), 2)
+            elif symbol == 'DOGE' or symbol == 'DOGE/USD' or symbol == 'DOGE/USDT':
+                price_input = round(float(price_input), 4)
         except:
             price_input = False
         return(price_input)
@@ -185,6 +190,8 @@ class OperateExchange:
                     granularity_input = False
             elif symbol == 'LTC' or symbol == 'LTC/USD' or symbol == 'LTC/USDT':
                 granularity_input = round(float(granularity_input), 2)
+            elif symbol == 'DOGE' or symbol == 'DOGE/USD' or symbol == 'DOGE/USDT':
+                granularity_input = round(float(granularity_input), 4)
         except:
             granularity_input = False
         return(granularity_input)
@@ -200,6 +207,8 @@ class OperateExchange:
                     spread_input = False
             elif symbol == 'LTC' or symbol == 'LTC/USD' or symbol == 'LTC/USDT':
                 spread_input = round(float(spread_input), 2)
+            elif symbol == 'DOGE' or symbol == 'DOGE/USD' or symbol == 'DOGE/USDT':
+                spread_input = round(float(spread_input), 4)
             if self.orderSettings['Amount'] < spread_input / self.arrayOrderSettings['Granularity']:
                 spread_input = False
                 print('\nERROR! OE Unable to create array order.\n    Cause: spread is too large for the trade amount.')
@@ -223,6 +232,8 @@ class OperateExchange:
                     print('\nERROR! OE Unable to create array order.\n    Cause: improper decimals for symbol.')
             elif symbol == 'LTC' or symbol == 'LTC/USD' or symbol == 'LTC/USDT':
                 end_price_input = round(float(end_price_input), 2)
+            elif symbol == 'DOGE' or symbol == 'DOGE/USD' or symbol == 'DOGE/USDT':
+                end_price_input = round(float(end_price_input), 5)
             if self.orderSettings['Side'] == 'buy':
                 if end_price_input > self.orderSettings['Price']:
                     end_price_input = False
@@ -524,6 +535,9 @@ class OperateExchange:
                 elif self.orderSettings['Symbol'] == 'LTC' or self.orderSettings['Symbol'] == 'LTC/USD' or \
                      self.orderSettings['Symbol'] == 'LTC/USDT' or self.orderSettings['Symbol'] == 'LTC/BTC':
                     granularity_modifier = .01
+                elif self.orderSettings['Symbol'] == 'DOGE' or self.orderSettings['Symbol'] == 'DOGE/USD' or \
+                     self.orderSettings['Symbol'] == 'DOGE/USDT' or self.orderSettings['Symbol'] == 'DOGE/BTC':
+                    granularity_modifier = .0001
                 else:
                     granularity_modifier = .5
                 while number_of_orders > self.orderSettings['Amount']:
