@@ -120,7 +120,7 @@ Users can customize, create & execute orders using the GUI. Here's what it looks
 <br />
 <p align="center">
   <a href="https://github.com/EvanGottschalk/OperateExchangeGUI">
-    <img src="screenshots/GUI_with_1_order.png" alt="GUI_screenshot">
+    <img src="screenshots/GUI_with_1_order.PNG" alt="GUI_screenshot">
   </a>
 </p>
 
