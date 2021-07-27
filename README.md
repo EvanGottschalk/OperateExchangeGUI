@@ -120,9 +120,23 @@ Users can customize, create & execute orders using the GUI. Here's what it looks
 <br />
 <p align="center">
   <a href="https://github.com/EvanGottschalk/OperateExchangeGUI">
-    <img src="screenshots/GUI_with_1_order.PNG" alt="GUI_screenshot" width="600">
+    <img src="screenshots/GUI_with_1_order.PNG" alt="GUI_screenshot" width="550">
   </a>
 </p>
+
+The main function of the GUI is to customize and create "Array Orders". An Array Order is an array of orders - a group of orders whose relative values are chosen with the goal of achieving optimal average buy prices or sell prices.
+
+# Buttons
+
+`Profile Buttons` - These are the buttons labeled `I` through `V` along the top of the GUI. Clicking `Save` underneath one of these labeled buttons stores the current order settings to that button. One can then click on that button in the future to load the settings associated to that Roman numeral. A brief description of those order settings are displayed next to the corresponding labeled button after settings have been saved or loaded.
+
+`Auto-Preview` - This button toggles the `auto_preview` setting, which controls how the GUI will respond when a user changes order settings. If the `Auto-Preview` button is up, then `auto_preview` is set to `False`, and the current order settings won't be previewed until the `Preview Orders` button or the `Execute Orders` button has been clicked. This means that, when order settings are changed, the order parameters further down the screen (e.g. `Min Amount` and `# of Orders`) will not be updated, but grayed out instead. The order parameters like `# of Orders` won't be updated until the `Preview Orders` or `Execute Orders` buttons are pressed. Keeping `Auto-Preview` off can be helpful because it significantly eliminates lag in the GUI, particularly with more complex orders. If the `Auto-Preview` button is down, then the order parameters like `# of Orders` will update every time settings are changed, and a new graph will be rendered every time as well.
+
+`Change Account` - Clicking this displays a list of accounts the user has chosen to be available. The user can then click the name of an account to switch the current API connection and use that account's API information to connect to the exchange. The current account is displayed to the left of the button.
+
+`Change Symbol` - Clicking this displays a list of cryptocurrency abbreviations that are available to be traded. The user can then click on the abbreviation of their choice to trade that currency. The current cryptocurrency to be traded is dislpayed to the left of the button.
+
+
 
 
 
