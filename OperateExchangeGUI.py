@@ -53,8 +53,7 @@ class OperateExchangeGUI:
                           'Indigo': '#6600ff', \
                           'Purple': '#9900ff', \
                           'Lavender': '#c9a6ff', \
-                          'Salmon': '#ffa6b5', \
-                          'DOGE Brown': '#B69A35'}
+                          'Salmon': '#ffa6b5'}
         self.green_colors = {5: '#f2fff2', \
                             10: '#e6ffe6', \
                             15: '#d7fcd7', \
@@ -70,27 +69,27 @@ class OperateExchangeGUI:
         self.symbol_colors = {'BTC/USD': '#F7931A', \
                               'ETH/USD': '#FFFF00', \
                               'LTC/USD': self.my_colors['Gray'], \
-                              'DOGE/USD': self.my_colors['DOGE Brown']}
-        self.symbol_defaults = {'BTC': {'Amount': 5000, \
-                                        'Price': 30000, \
-                                        'Granularity': 50, \
-                                        'Spread': 2000, \
-                                        'End Price': 28000}, \
-                                'ETH': {'Amount': 20, \
-                                        'Price': 2000, \
-                                        'Granularity': .1, \
-                                        'Spread': 50, \
-                                        'End Price': 1950}, \
-                                'LTC': {'Amount': 20, \
-                                        'Price': 100, \
-                                        'Granularity': .5, \
-                                        'Spread': 10, \
-                                        'End Price': 90}, \
-                                'DOGE': {'Amount': 20, \
-                                        'Price': .18, \
-                                        'Granularity': .001, \
-                                        'Spread': .01, \
-                                        'End Price': .17}}
+                              'DOGE/USD': '#B69A35'}
+        self.symbol_defaults = {'BTC/USD': {'Amount': 1000, \
+                                            'Price': 30000, \
+                                            'Granularity': 50, \
+                                            'Spread': 2000, \
+                                            'End Price': 28000}, \
+                                'ETH/USD': {'Amount': 50, \
+                                            'Price': 2000, \
+                                            'Granularity': .1, \
+                                            'Spread': 50, \
+                                            'End Price': 1950}, \
+                                'LTC/USD': {'Amount': 30, \
+                                            'Price': 100, \
+                                            'Granularity': .5, \
+                                            'Spread': 10, \
+                                            'End Price': 90}, \
+                                'DOGE/USD': {'Amount': 20, \
+                                             'Price': .18, \
+                                             'Granularity': .001, \
+                                             'Spread': .01, \
+                                             'End Price': .17}}
         self.account_colors = {'Main': self.my_colors['White'], \
                                'Short 50x': self.my_colors['Pink'], \
                                'Long 50x': self.my_colors['Teal'], \
@@ -1303,9 +1302,15 @@ class OperateExchangeGUI:
             self.OE.orderSettings['Symbol'] = str(symbol_input)
             self.label_current_symbol.config(text=' ' + str(symbol_input) + ' ', bg=self.symbol_colors[self.OE.orderSettings['Symbol']])
             #self.label_current_symbol_price.config(text='$' + str(self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['bid']), bg=self.symbol_colors[self.OE.orderSettings['Symbol']])
+            self.OE.orderSettings['Amount'] = self.symbol_defaults[symbol_input]['Amount']
+            self.OE.orderSettings['Price'] = self.symbol_defaults[symbol_input]['Price']
+            self.OE.arrayOrderSettings['Granularity'] = self.symbol_defaults[symbol_input]['Granularity']
+            self.OE.arrayOrderSettings['Spread'] = self.symbol_defaults[symbol_input]['Spread']
+            self.OE.arrayOrderSettings['End Price'] = self.symbol_defaults[symbol_input]['End Price']
+            self.updateSettingsLabels()
+            self.updateArraySettingsLabels()
             if self.auto_preview:
                 self.updateParameterLabels()
-                self.updateArraySettingsLabels()
             else:
                 self.settings_have_changed_since_last_preview = True
                 self.darkenArrayParameters()
