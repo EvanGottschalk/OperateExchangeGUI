@@ -1456,10 +1456,18 @@ class OperateExchangeGUI:
 
     def changePriceToMarket(self):
         try:
-            if self.OE.orderSettings['Side'] == 'buy':
-                market_price = self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['bid']
-            else:
-                market_price = self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['ask']
+            try:
+                if self.OE.orderSettings['Side'] == 'buy':
+                    market_price = self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['bid']
+                else:
+                    market_price = self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['ask']
+            except:
+                USDT_symbol = self.OE.orderSettings['Symbol'] + 'T'
+                if self.OE.orderSettings['Side'] == 'buy':
+                    market_price = self.OE.CTE.exchange.fetchTicker(USDT_symbol)['bid']
+                else:
+                    market_price = self.OE.CTE.exchange.fetchTicker(USDT_symbol)['ask']
+            market_price = round(market_price, 4)
             self.OE.orderSettings['Price'] = float(market_price)
             self.label_current_price.config(text=' $' + str(market_price) + ' ')
             self.entry_change_price.delete(0, 'end')
@@ -1476,7 +1484,7 @@ class OperateExchangeGUI:
             print('Price set to Market Price: $' + str(self.OE.orderSettings['Price']))
             self.label_last_action.config(text='[   Just changed Price   ]')
         except:
-           print("CONNECTION ERROR! Can't fetch ticker.")
+           print("OE GUI : CONNECTION ERROR! Can't fetch ticker.")
         
 
     def previewOrders(self):
@@ -1770,7 +1778,7 @@ class OperateExchangeGUI:
                 connection_data = self.OE.CTE.connect('Default', account_input)
                 self.OE.orderSettings['Account'] = str(account_input)
                 self.OE.orderSettings['Exchange'] = self.OE.CTE.exchange_name
-                print('OE : Account set to ' + str(self.OE.orderSettings['Account']))
+                print('OE GUI : Account set to ' + str(self.OE.orderSettings['Account']))
                 self.label_current_account.config(bg=self.account_colors[self.OE.orderSettings['Account']], text=' ' + str(account_input) + ' ')
                 self.label_last_action.config(text='[   Just changed Account   ]')
             except:
