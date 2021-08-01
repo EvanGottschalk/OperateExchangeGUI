@@ -121,18 +121,24 @@ class ConnectToExchange:
                 if type(args[0]) == dict:
                     exchange_name = args[0]['Exchange Name']
                     account_name = args[0]['Account Name']
-            # This else is for the case where the user enters the exchange name and the account name all at once
+            # This else is for the case where the user enters just one string
                 else:
                     if args[0].lower() == 'default':
                         args = [self.exchangeAccounts['Default']]
-                    split_name = args[0].split(' ')
-                    exchange_name = split_name[0]
-                    split_account_name = split_name[1:len(split_name)]
-                    account_name = ''
-                    for word in split_account_name:
-                        account_name += word
-                        if not(word == split_account_name[len(split_account_name) - 1]):
-                            account_name += ' '
+                # This if is for the case where the string is both the exchange name and account name separated by a space
+                    if ' ' in args[0]:
+                        split_name = args[0].split(' ')
+                        exchange_name = split_name[0]
+                        split_account_name = split_name[1:len(split_name)]
+                        account_name = ''
+                        for word in split_account_name:
+                            account_name += word
+                            if not(word == split_account_name[len(split_account_name) - 1]):
+                                account_name += ' '
+                # This else assumes the 1 string entered is the exchange name, and assigns the account_name to be the default account
+                    else:
+                        exchange_name = args[0]
+                        account_name = self.exchangeAccounts['Default Account']
         # This is for the case where the user calls connect() with 2 inputs - the exchange name followed by the account name
             elif len(args) == 2:
                 exchange_name = args[0]
