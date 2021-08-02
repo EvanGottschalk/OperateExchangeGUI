@@ -1001,29 +1001,20 @@ class OperateExchangeGUI:
                 print('ERROR! Invalid value input for Spread.')
                 spread_input = False
         if spread_input:
-        # Attempts to update the End Price
-            if self.OE.orderSettings['Side'] == 'buy':
-                new_end_price = self.OE.orderSettings['Price'] - spread_input
+            self.OE.arrayOrderSettings['Spread'] = spread_input
+            self.label_current_spread.config(text=' $' + str(spread_input) + ' ')
+            self.entry_change_spread.delete(0, 'end')
+            if self.lock_end_price:
+                self.updatePrice()
             else:
-                new_end_price = self.OE.orderSettings['Price'] + spread_input
-            try:
-                new_end_price = self.OE.checkEndPriceInput(new_end_price)
-            except:
-                print('ERROR! The value input for Spread makes the End Price invalid.')
-                new_end_price = False
-            if new_end_price:
-                self.OE.arrayOrderSettings['Spread'] = float(spread_input)
-                self.entry_change_spread.delete(0, 'end')
-                self.label_current_spread.config(text=' $' + str(self.OE.arrayOrderSettings['Spread']) + ' ')
-                self.OE.arrayOrderSettings['End Price'] = float(new_end_price)
-                self.label_current_end_price.config(text=' $' + str(self.OE.arrayOrderSettings['End Price']) + ' ')                
-                if self.auto_preview:
-                    self.updateParameterLabels()
-                else:
-                    self.settings_have_changed_since_last_preview = True
-                    self.darkenArrayParameters()
-                print('Spread set to ' + str(self.OE.arrayOrderSettings['Spread']))
-                self.label_last_action.config(text='[   Just changed Spread   ]')
+                self.updateEndPrice()
+            if self.auto_preview:
+                self.updateParameterLabels()
+            else:
+                self.settings_have_changed_since_last_preview = True
+                self.darkenArrayParameters()
+            print('Spread set to ' + str(self.OE.arrayOrderSettings['Spread']))
+            self.label_last_action.config(text='[   Just changed Spread   ]')
         else:
             print('ERROR! Invalid value input for Spread.')
 
@@ -1037,29 +1028,20 @@ class OperateExchangeGUI:
                 print('ERROR! Invalid value input for End Price.')
                 end_price_input = False
         if end_price_input:          
-        # Attempts to update the Spread
-            if self.OE.orderSettings['Side'] == 'buy':
-                new_spread = self.OE.orderSettings['Price'] - end_price_input
+            self.OE.arrayOrderSettings['End Price'] = float(end_price_input)
+            self.label_current_end_price.config(text=' $' + str(self.OE.arrayOrderSettings['End Price']) + ' ')
+            self.entry_change_end_price.delete(0, 'end')
+            if self.lock_end_price:
+                self.updatePrice()
             else:
-                new_spread = end_price_input - self.OE.orderSettings['Price']
-            try:
-                new_spread = self.OE.checkSpreadInput(new_spread)
-            except:
-                print('ERROR! The value input for End Price makes the Spread invalid.')
-                new_spread = False
-            if new_spread:
-                self.OE.arrayOrderSettings['End Price'] = float(end_price_input)
-                self.entry_change_end_price.delete(0, 'end')
-                self.label_current_end_price.config(text=' $' + str(self.OE.arrayOrderSettings['End Price']) + ' ')
-                self.OE.arrayOrderSettings['Spread'] = float(new_spread)
-                self.label_current_spread.config(text=' $' + str(self.OE.arrayOrderSettings['Spread']) + ' ')
-                if self.auto_preview:
-                    self.updateParameterLabels()
-                else:
-                    self.settings_have_changed_since_last_preview = True
-                    self.darkenArrayParameters()
-                print('End Price set to ' + str(self.OE.arrayOrderSettings['End Price']))
-                self.label_last_action.config(text='[   Just changed End Price   ]')
+                self.updateSpread()
+            if self.auto_preview:
+                self.updateParameterLabels()
+            else:
+                self.settings_have_changed_since_last_preview = True
+                self.darkenArrayParameters()
+            print('End Price set to ' + str(self.OE.arrayOrderSettings['End Price']))
+            self.label_last_action.config(text='[   Just changed End Price   ]')
         else:
             print('ERROR! Invalid value input for End Price.')
         
@@ -1440,8 +1422,8 @@ class OperateExchangeGUI:
                 price_input = False
         if price_input:
             self.OE.orderSettings['Price'] = float(price_input)
-            self.entry_change_price.delete(0, 'end')
             self.label_current_price.config(text=' $' + str(price_input) + ' ')
+            self.entry_change_price.delete(0, 'end')
             if self.lock_end_price:
                 self.updateSpread()
             else:
@@ -1757,16 +1739,36 @@ class OperateExchangeGUI:
             new_end_price = float(self.OE.orderSettings['Price']) - float(self.OE.arrayOrderSettings['Spread'])
         else:
             new_end_price = float(self.OE.orderSettings['Price']) + float(self.OE.arrayOrderSettings['Spread'])
-        self.OE.arrayOrderSettings['End Price'] = new_end_price
-        self.label_current_end_price.config(text= ' $' + str(new_end_price))
+        new_end_price = self.OE.checkEndPriceInput(new_end_price)
+        if new_end_price:
+            self.OE.arrayOrderSettings['End Price'] = new_end_price
+            self.label_current_end_price.config(text= ' $' + str(new_end_price))
+        else:
+            print('OE GUI : ERROR! The new End Price resulting from changing the Spread or Price is invalid.')
 
     def updateSpread(self):
         if self.OE.orderSettings['Side'] == 'buy':
             new_spread = float(self.OE.orderSettings['Price']) - float(self.OE.arrayOrderSettings['End Price'])
         else:
             new_spread = float(self.OE.arrayOrderSettings['End Price']) - float(self.OE.orderSettings['Price'])
-        self.OE.arrayOrderSettings['Spread'] = new_spread
-        self.label_current_spread.config(text=str(new_spread))
+        new_spread = self.OE.checkSpreadInput(new_spread)
+        if new_spread:
+            self.OE.arrayOrderSettings['Spread'] = new_spread
+            self.label_current_spread.config(text=' $' + str(new_spread) + ' ')
+        else:
+            print('OE GUI : ERROR! The new Spread resulting from changing the Price or End Price is invalid.')
+
+    def updatePrice(self):
+        if self.OE.orderSettings['Side'] == 'buy':
+            new_price = float(self.OE.arrayOrderSettings['End Price']) + float(self.OE.arrayOrderSettings['Spread'])
+        else:
+            new_price = float(self.OE.arrayOrderSettings['End Price']) - float(self.OE.arrayOrderSettings['Spread'])
+        new_price = self.OE.checkPriceInput(new_price)
+        if new_price:
+            self.OE.arrayOrderSettings['Price'] = new_price
+            self.label_current_price.config(text=' $' + str(new_price) + ' ')
+        else:
+            print('OE GUI : ERROR! The new Price resulting from changing the Spread or End Price is invalid.')
 
     def changeAccount(self, account_input):
         account_input = self.OE.checkAccountInput('Default', account_input)
