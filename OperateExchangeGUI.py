@@ -74,22 +74,26 @@ class OperateExchangeGUI:
                                             'Price': 30000, \
                                             'Granularity': 50, \
                                             'Spread': 2000, \
-                                            'End Price': 28000}, \
+                                            'End Price': 28000, \
+                                            'Nudge Button Multiplier': 1}, \
                                 'ETH/USD': {'Amount': 50, \
                                             'Price': 2000, \
                                             'Granularity': .1, \
                                             'Spread': 50, \
-                                            'End Price': 1950}, \
+                                            'End Price': 1950, \
+                                            'Nudge Button Multiplier': (1/5) * (1/10)}, \
                                 'LTC/USD': {'Amount': 30, \
                                             'Price': 100, \
                                             'Granularity': .5, \
                                             'Spread': 10, \
-                                            'End Price': 90}, \
+                                            'End Price': 90, \
+                                            'Nudge Button Multiplier': (1/5) * (1/100)}, \
                                 'DOGE/USD': {'Amount': 20, \
                                              'Price': .18, \
                                              'Granularity': .001, \
                                              'Spread': .01, \
-                                             'End Price': .17}}
+                                             'End Price': .17, \
+                                             'Nudge Button Multiplier': (1/5) * (1/10000)}}
         self.account_colors = {'Main': self.my_colors['White'], \
                                'Short 50x': self.my_colors['Pink'], \
                                'Long 50x': self.my_colors['Teal'], \
@@ -1456,17 +1460,10 @@ class OperateExchangeGUI:
 
     def changePriceToMarket(self):
         try:
-            try:
-                if self.OE.orderSettings['Side'] == 'buy':
-                    market_price = self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['bid']
-                else:
-                    market_price = self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['ask']
-            except:
-                USDT_symbol = self.OE.orderSettings['Symbol'] + 'T'
-                if self.OE.orderSettings['Side'] == 'buy':
-                    market_price = self.OE.CTE.exchange.fetchTicker(USDT_symbol)['bid']
-                else:
-                    market_price = self.OE.CTE.exchange.fetchTicker(USDT_symbol)['ask']
+            if self.OE.orderSettings['Side'] == 'buy':
+                market_price = self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['bid']
+            else:
+                market_price = self.OE.CTE.exchange.fetchTicker(self.OE.orderSettings['Symbol'])['ask']
             market_price = round(market_price, 4)
             self.OE.orderSettings['Price'] = float(market_price)
             self.label_current_price.config(text=' $' + str(market_price) + ' ')
@@ -1806,6 +1803,11 @@ class OperateExchangeGUI:
         self.changeAccount('Monty')
 
     def nudgeSetting(self, setting_to_nudge, amount_to_nudge):
+        original_amount_to_nudge = amount_to_nudge
+        if setting_to_nudge in ['Price', 'Granularity', 'Spread', 'End Price']:
+            amount_to_nudge = amount_to_nudge * self.symbol_defaults[self.OE.orderSettings['Symbol']]['Nudge Button Multiplier']
+            if original_amount_to_nudge != amount_to_nudge:
+                print('OE GUI : Nudge amount modified from ' + str(original_amount_to_nudge) + ' to ' + str(amount_to_nudge))
         try:
             new_value = self.OE.orderSettings[setting_to_nudge] + amount_to_nudge
         except:
