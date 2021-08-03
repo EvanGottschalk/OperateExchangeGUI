@@ -1807,7 +1807,11 @@ class OperateExchangeGUI:
     def nudgeSetting(self, setting_to_nudge, amount_to_nudge):
         original_amount_to_nudge = amount_to_nudge
         if setting_to_nudge in ['Price', 'Granularity', 'Spread', 'End Price']:
-            amount_to_nudge = amount_to_nudge * self.symbol_defaults[self.OE.orderSettings['Symbol']]['Nudge Button Multiplier']
+            default_multiplier = self.symbol_defaults[self.OE.orderSettings['Symbol']]['Nudge Button Multiplier']
+            granularity_multiplier = 1
+            if setting_to_nudge == 'Granularity':
+                granularity_multiplier = 10
+            amount_to_nudge = amount_to_nudge * granularity_multiplier * default_multiplier
             if original_amount_to_nudge != amount_to_nudge:
                 print('OE GUI : Nudge amount modified from ' + str(original_amount_to_nudge) + ' to ' + str(amount_to_nudge))
         try:
@@ -2146,9 +2150,9 @@ class OperateExchangeGUI:
     def loadProfile(self, profile_to_load):
         try:
             self.changeAccount(profile_dict['Order Settings']['Account'])
+            self.changeSymbol(profile_dict['Order Settings']['Symbol'])
             self.OE.orderSettings = copy.deepcopy(self.profile_display[profile_to_load]['Order Settings'])
             self.OE.arrayOrderSettings = copy.deepcopy(self.profile_display[profile_to_load]['Array Order Settings'])
-            self.changeSymbol(profile_dict['Order Settings']['Symbol'])
             self.changeStyle(profile_dict['Array Order Settings']['Style'])
             self.updateParameterLabels()
             self.updateSettingsLabels()
@@ -2169,9 +2173,9 @@ class OperateExchangeGUI:
             try:
                 profile_dict = pickle.load(open(str(pathlib.Path().absolute()) + '\\_Array_Order_Profiles\\Profile_' + profile_to_load + '.pickle', 'rb'))
                 self.changeAccount(profile_dict['Order Settings']['Account'])
+                self.changeSymbol(profile_dict['Order Settings']['Symbol'])
                 self.OE.orderSettings = copy.deepcopy(profile_dict['Order Settings'])
                 self.OE.arrayOrderSettings = copy.deepcopy(profile_dict['Array Order Settings'])
-                self.changeSymbol(profile_dict['Order Settings']['Symbol'])
                 self.changeStyle(profile_dict['Array Order Settings']['Style'])
                 self.updateParameterLabels()
                 self.updateSettingsLabels()
