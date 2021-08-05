@@ -1466,24 +1466,7 @@ class OperateExchangeGUI:
            print("OE GUI : CONNECTION ERROR! Can't fetch ticker.")
         
 
-    def previewOrders(self):
-        self.OE.createArrayOrder('use_current_settings')
-        self.label_max_price.config(text=' ' + str(self.OE.arrayOrderParameters['Highest Price Order Price']) + ' ')
-        self.label_max_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Highest Price Order Amount']) + ' ')
-        self.label_min_price.config(text=' ' + str(self.OE.arrayOrderParameters['Lowest Price Order Price']) + ' ')
-        self.label_min_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Lowest Price Order Amount']) + ' ')
-        # Removed due to redundancy
-        #self.label_total_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Total Order Amount']) + ' ')
-        self.label_entry_at_execution.config(text=' ' + str(round(float(self.OE.arrayOrderParameters['Entry at Full Execution']), 2)) + ' ')
-        self.label_number_of_orders.config(text=' ' + str(self.OE.arrayOrderParameters['Number of Orders']) + ' ')
-        self.updateArraySettingsLabels()
-        self.settings_have_changed_since_last_preview = False
-        self.lightenArrayParameters()
-##        if self.OE.validateOrder(self.OE.arrayOrderParameters['All Orders']):
-##            if self.OE.orderSettings['Side'] == 'buy':
-##                self.button_execute_orders.config(bg=self.my_colors['Green'], state='active')
-##            else:
-##                self.button_execute_orders.config(bg=self.my_colors['Red'], state='active')
+
 
 
     def refreshDisplayedOrders(self):
@@ -1684,16 +1667,34 @@ class OperateExchangeGUI:
         self.updateParameterLabels()
         self.label_last_action.config(text='[   Just created Order #' + str(array_order_number) + '   ]')
         
+    def previewOrders(self):
+        self.OE.createArrayOrder('use_current_settings')
+        self.label_max_price.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Highest Price Order Price'])) + ' ')
+        self.label_max_amount.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Highest Price Order Amount'])) + ' ')
+        self.label_min_price.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Lowest Price Order Price'])) + ' ')
+        self.label_min_amount.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Lowest Price Order Amount'])) + ' ')
+        # Removed due to redundancy
+        #self.label_total_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Total Order Amount']) + ' ')
+        self.label_entry_at_execution.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Entry at Full Execution'])) + ' ')
+        self.label_number_of_orders.config(text=' ' + str(self.OE.arrayOrderParameters['Number of Orders']) + ' ')
+        self.updateArraySettingsLabels()
+        self.settings_have_changed_since_last_preview = False
+        self.lightenArrayParameters()
+##        if self.OE.validateOrder(self.OE.arrayOrderParameters['All Orders']):
+##            if self.OE.orderSettings['Side'] == 'buy':
+##                self.button_execute_orders.config(bg=self.my_colors['Green'], state='active')
+##            else:
+##                self.button_execute_orders.config(bg=self.my_colors['Red'], state='active')
 
     def updateParameterLabels(self):
         self.OE.createArrayOrder('update_current_parameters')
-        self.label_max_price.config(text=' ' + str(self.OE.arrayOrderParameters['Highest Price Order Price']) + ' ')
-        self.label_max_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Highest Price Order Amount']) + ' ')
-        self.label_min_price.config(text=' ' + str(self.OE.arrayOrderParameters['Lowest Price Order Price']) + ' ')
-        self.label_min_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Lowest Price Order Amount']) + ' ')
+        self.label_max_price.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Highest Price Order Price'])) + ' ')
+        self.label_max_amount.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Highest Price Order Amount'])) + ' ')
+        self.label_min_price.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Lowest Price Order Price'])) + ' ')
+        self.label_min_amount.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Lowest Price Order Amount'])) + ' ')
         # Removed due to redundancy
         #self.label_total_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Total Order Amount']) + ' ')
-        self.label_entry_at_execution.config(text=' ' + str(round(float(self.OE.arrayOrderParameters['Entry at Full Execution']), 2)) + ' ')
+        self.label_entry_at_execution.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Entry at Full Execution'])) + ' ')
         self.label_number_of_orders.config(text=' ' + str(self.OE.arrayOrderParameters['Number of Orders']) + ' ')
       # This is a price "ticker" that displays the current price of the currency you're trading
       # I commented it out because it slows the program down too much. But, I've been thinking about adding it as an option
@@ -1711,12 +1712,12 @@ class OperateExchangeGUI:
             self.label_current_side.config(text=' Buy / Long ', bg=self.my_colors['Green'])
             self.button_execute_orders.config(bg=self.my_colors['Dark Green'], activebackground=self.my_colors['Green'])
         self.label_current_amount.config(text=' ' + str(self.OE.orderSettings['Amount']) + ' ')
-        self.label_current_price.config(text=' ' + str(self.OE.orderSettings['Price']) + ' ')
+        self.label_current_price.config(text=' ' + str(self.OE.checkPriceInput(self.OE.orderSettings['Price'])) + ' ')
 
     def updateArraySettingsLabels(self):
-        self.label_current_granularity.config(text=' ' + str(self.OE.arrayOrderSettings['Granularity']) + ' ')
-        self.label_current_spread.config(text=' ' + str(self.OE.arrayOrderSettings['Spread']) + ' ')
-        self.label_current_end_price.config(text=' ' + str(self.OE.arrayOrderSettings['End Price']) + ' ')
+        self.label_current_granularity.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderSettings['Granularity'])) + ' ')
+        self.label_current_spread.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderSettings['Spread'])) + ' ')
+        self.label_current_end_price.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderSettings['End Price'])) + ' ')
         self.label_current_steepness.config(text=' ' + str(self.OE.arrayOrderSettings['Steepness']) + ' ')
         self.label_current_slope.config(text=' ' + str(self.OE.arrayOrderSettings['Slope']) + ' ')
         if self.row_17_button == 'Minimum Order Size':
@@ -2096,7 +2097,8 @@ class OperateExchangeGUI:
         self.saveProfile('I')
         self.label_profile_I_info = tkinter.Label(self.GUI, font=self.font_dict[8], bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
                                                       text=' ' + str(self.OE.orderSettings['Amount']) + ' ' + self.OE.arrayOrderSettings['Style'] + '\n ' + \
-                                                      str(float(self.OE.orderSettings['Price'])) + ' - ' + str(float(self.OE.arrayOrderSettings['End Price'])))
+                                                      str(self.OE.checkPriceInput(self.OE.orderSettings['Price'])) + ' - ' + \
+                                                      str(self.OE.checkPriceInput(self.OE.arrayOrderSettings['End Price'])))
         if self.OE.orderSettings['Side'] == 'buy':
             self.label_profile_I_info.config(bg=self.green_colors[20])
         else:
@@ -2107,7 +2109,8 @@ class OperateExchangeGUI:
         self.saveProfile('II')
         self.label_profile_II_info = tkinter.Label(self.GUI, font=self.font_dict[8], bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
                                                       text=' ' + str(self.OE.orderSettings['Amount']) + ' ' + self.OE.arrayOrderSettings['Style'] + '\n ' + \
-                                                      str(float(self.OE.orderSettings['Price'])) + ' - ' + str(float(self.OE.arrayOrderSettings['End Price'])))
+                                                      str(self.OE.checkPriceInput(self.OE.orderSettings['Price'])) + ' - ' + \
+                                                      str(self.OE.checkPriceInput(self.OE.arrayOrderSettings['End Price'])))
         if self.OE.orderSettings['Side'] == 'buy':
             self.label_profile_II_info.config(bg=self.green_colors[20])
         else:
@@ -2118,7 +2121,8 @@ class OperateExchangeGUI:
         self.saveProfile('III')
         self.label_profile_III_info = tkinter.Label(self.GUI, font=self.font_dict[8], bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
                                                       text=' ' + str(self.OE.orderSettings['Amount']) + ' ' + self.OE.arrayOrderSettings['Style'] + '\n ' + \
-                                                      str(float(self.OE.orderSettings['Price'])) + ' - ' + str(float(self.OE.arrayOrderSettings['End Price'])))
+                                                      str(self.OE.checkPriceInput(self.OE.orderSettings['Price'])) + ' - ' + \
+                                                      str(self.OE.checkPriceInput(self.OE.arrayOrderSettings['End Price'])))
         if self.OE.orderSettings['Side'] == 'buy':
             self.label_profile_III_info.config(bg=self.green_colors[20])
         else:
@@ -2129,7 +2133,8 @@ class OperateExchangeGUI:
         self.saveProfile('IV')
         self.label_profile_IV_info = tkinter.Label(self.GUI, font=self.font_dict[8], bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
                                                       text=' ' + str(self.OE.orderSettings['Amount']) + ' ' + self.OE.arrayOrderSettings['Style'] + '\n ' + \
-                                                      str(float(self.OE.orderSettings['Price'])) + ' - ' + str(float(self.OE.arrayOrderSettings['End Price'])))
+                                                      str(self.OE.checkPriceInput(self.OE.orderSettings['Price'])) + ' - ' + \
+                                                      str(self.OE.checkPriceInput(self.OE.arrayOrderSettings['End Price'])))
         if self.OE.orderSettings['Side'] == 'buy':
             self.label_profile_IV_info.config(bg=self.green_colors[20])
         else:
@@ -2140,7 +2145,8 @@ class OperateExchangeGUI:
         self.saveProfile('V')
         self.label_profile_V_info = tkinter.Label(self.GUI, font=self.font_dict[8], bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
                                                       text=' ' + str(self.OE.orderSettings['Amount']) + ' ' + self.OE.arrayOrderSettings['Style'] + '\n ' + \
-                                                      str(float(self.OE.orderSettings['Price'])) + ' - ' + str(float(self.OE.arrayOrderSettings['End Price'])))
+                                                      str(self.OE.checkPriceInput(self.OE.orderSettings['Price'])) + ' - ' + \
+                                                      str(self.OE.checkPriceInput(self.OE.arrayOrderSettings['End Price'])))
         if self.OE.orderSettings['Side'] == 'buy':
             self.label_profile_V_info.config(bg=self.green_colors[20])
         else:
