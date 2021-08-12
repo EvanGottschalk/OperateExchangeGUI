@@ -150,9 +150,11 @@ The main function of the GUI is to customize and create "Array Orders". An Array
 
 ### Array Order Settings
 
-`Update End Price` - 
+`Update End Price` - Clicking this changes the ending `price` of the Array Order to be the value input in the field to on its left. This "ending" price is the lowest price in a `buy` Array Order or the highest price in a `sell` Array Order. The order with the highest `amount` will always be at the input value. Users may also click the "nudge" buttons (e.g. `-1000`, `+100`) to change the ending price of the current Array Order by the corresponding value. The current ending price is displayed between the "nudge" buttons.
 
+`Update Spread` - Clicking this changes the `spread` of the Array Order to be the value input in the field to on its left. The `spread` determines the price gap between the initial starting `price` and the end price. For example, a buy Array Order with a `spread` of $100 will have its lowest-value order priced $100 higher than its highest-value order. Users may also click the "nudge" buttons (e.g. `-100`, `+10`) to change the `spread` of the current Array Order by the corresponding value. The current `spread` is displayed between the "nudge" buttons.
 
+`Update Granularity` - Clicking this changes the `granularity` of the Array Order to be the value input in the field to on its left. The `granularity` determines the price gap between individual orders in the array order. For example, a buy Array Order with a `granularity` of $10, a starting `price` of $100, and an ending price of $80, will consist of 3 individual orders: the smallest at $100, a larger one at $90, and the largest at $80. Changing the `granularity` allows users to modify the number of orders and the size of the individual orders without changing the starting `price`, ending price, or the total `amount` of the Array Order. Users may also click the "nudge" buttons (e.g. `-10`, `+1`) to change the `granularity` of the current Array Order by the corresponding value. The current `granularity` is displayed between the "nudge" buttons.
 
 <!-- ROADMAP -->
 ## Roadmap
