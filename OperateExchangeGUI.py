@@ -135,13 +135,13 @@ class OperateExchangeGUI:
                            'Steepness': 15, \
                            'Slope': 16, \
                            'Minimum Order Size': 17, \
-                           'Truncation Amount': 17, \
+                           'Maximum Amount': 17, \
                            'Quick Granularity': 17, \
                            'Style': 18}
     # The 17th row in the GUI interface has been used for testing. It can be changed to a different operation by modifying the row_17_button variable
-        #self.row_17_button = 'Truncation Amount'
+        self.row_17_button = 'Maximum Amount'
         #self.row_17_button = 'Minimum Order Size'
-        self.row_17_button = 'Quick Granularity'
+        #self.row_17_button = 'Quick Granularity'
     # These functions allow users to cancel or rebuild individual array orders
     # They are associated with int values to make it easier to run these functions through the GUI buttons
         self.individual_order_functions = {'Cancel': {1: self.cancelArrayOrder_1, \
@@ -339,14 +339,14 @@ class OperateExchangeGUI:
             self.button_change_minimum_order_size = tkinter.Button(self.GUI, font=self.button_font, bg=self.current_exchange_colors['Dark Blue'], fg=self.current_exchange_colors['White'], \
                                                        activebackground=self.current_exchange_colors['Active Dark Blue'], activeforeground=self.current_exchange_colors['White'], \
                                                        padx=6, text='      Update Minimum      ', command=self.changeMinimumOrderSize)
-    # Truncation Amount Input
-        elif self.row_17_button == 'Truncation Amount':
-            self.label_current_truncation_amount_title = tkinter.Label(self.GUI, font=self.label_font, bg=self.current_exchange_colors['White'], text='Truncation Amount: ')
-            self.label_current_truncation_amount = tkinter.Label(self.GUI, font=self.current_value_font, bg=self.current_exchange_colors['Light Blue'], text=' ' + str(self.OE.arrayOrderSettings['Truncation Amount']) + ' ')
-            self.entry_change_truncation_amount = tkinter.Entry(self.GUI, font=self.entry_font, justify='center', width=16, bd=3)
-            self.button_change_truncation_amount = tkinter.Button(self.GUI, font=self.button_font, bg=self.current_exchange_colors['Dark Blue'], fg=self.current_exchange_colors['White'], \
+    # Maximum Amount Input
+        elif self.row_17_button == 'Maximum Amount':
+            self.label_current_maximum_amount_title = tkinter.Label(self.GUI, font=self.label_font, bg=self.current_exchange_colors['White'], text='Maximum Amount: ')
+            self.label_current_maximum_amount = tkinter.Label(self.GUI, font=self.current_value_font, bg=self.current_exchange_colors['Light Blue'], text=' ' + str(self.OE.arrayOrderSettings['Maximum Amount']) + ' ')
+            self.entry_change_maximum_amount = tkinter.Entry(self.GUI, font=self.entry_font, justify='center', width=16, bd=3)
+            self.button_change_maximum_amount = tkinter.Button(self.GUI, font=self.button_font, bg=self.current_exchange_colors['Dark Blue'], fg=self.current_exchange_colors['White'], \
                                                        activebackground=self.current_exchange_colors['Active Dark Blue'], activeforeground=self.current_exchange_colors['White'], \
-                                                       padx=2, text='      Update Truncation      ', command=self.changeTruncationAmount)
+                                                       padx=2, text='     Update Max Amount     ', command=self.changeMaximumAmount)
     # Quick Granularity Input
         elif self.row_17_button == 'Quick Granularity':
         # Quick Granularity Intensity
@@ -880,12 +880,12 @@ class OperateExchangeGUI:
             self.label_current_minimum_order_size.grid(columnspan=2, column=2, row=self.layoutDict['Minimum Order Size'])
             self.button_change_minimum_order_size.grid(columnspan=2, column=5, row=self.layoutDict['Minimum Order Size'])
             self.entry_change_minimum_order_size.grid(column=4, row=self.layoutDict['Minimum Order Size'])
-    # Truncation Amount widgets added to grid
-        elif self.row_17_button == 'Truncation Amount':
-            self.label_current_truncation_amount_title.grid(column=1, row=self.layoutDict['Truncation Amount'])
-            self.label_current_truncation_amount.grid(columnspan=2, column=2, row=self.layoutDict['Truncation Amount'])
-            self.button_change_truncation_amount.grid(columnspan=2, column=5, row=self.layoutDict['Truncation Amount'])
-            self.entry_change_truncation_amount.grid(column=4, row=self.layoutDict['Truncation Amount'])
+    # Maximum Amount widgets added to grid
+        elif self.row_17_button == 'Maximum Amount':
+            self.label_current_maximum_amount_title.grid(column=1, row=self.layoutDict['Maximum Amount'])
+            self.label_current_maximum_amount.grid(columnspan=2, column=2, row=self.layoutDict['Maximum Amount'])
+            self.button_change_maximum_amount.grid(columnspan=2, column=5, row=self.layoutDict['Maximum Amount'])
+            self.entry_change_maximum_amount.grid(column=4, row=self.layoutDict['Maximum Amount'])
     # Quick Granularity widgets added to grid
         elif self.row_17_button == 'Quick Granularity':
             self.label_current_quick_granularity_title.grid(column=1, row=self.layoutDict['Quick Granularity'])
@@ -1114,24 +1114,24 @@ class OperateExchangeGUI:
             print('ERROR! Invalid value input for Minimum Order Size.')
 
 
-    def changeTruncationAmount(self):
+    def changeMaximumAmount(self):
         try:
-            truncation_amount_input = self.OE.checkTruncationAmountInput(self.entry_change_truncation_amount.get())
-            if truncation_amount_input:
-                self.OE.arrayOrderSettings['Truncation Amount'] = int(truncation_amount_input)
-                self.entry_change_truncation_amount.delete(0, 'end')
-                self.label_current_truncation_amount.config(text=' ' + str(self.OE.arrayOrderSettings['Truncation Amount']) + ' ')
+            maximum_amount_input = self.OE.checkMaximumAmountInput(self.entry_change_maximum_amount.get())
+            if maximum_amount_input:
+                self.OE.arrayOrderSettings['Maximum Amount'] = int(maximum_amount_input)
+                self.entry_change_maximum_amount.delete(0, 'end')
+                self.label_current_maximum_amount.config(text=' ' + str(self.OE.arrayOrderSettings['Maximum Amount']) + ' ')
                 if self.auto_preview:
                     self.updateParameterLabels()
                 else:
                     self.settings_have_changed_since_last_preview = True
                     self.darkenArrayParameters()
-                print('Truncation Amount set to ' + str(self.OE.arrayOrderSettings['Truncation Amount']))
-                self.label_last_action.config(text='[  Just changed Truncation Amount  ]')
+                print('Maximum Amount set to ' + str(self.OE.arrayOrderSettings['Maximum Amount']))
+                self.label_last_action.config(text='[  Just changed Maximum Amount  ]')
             else:
-                print('ERROR! Invalid value input for Truncation Amount.')
+                print('ERROR! Invalid value input for Maximum Amount.')
         except:
-            print('ERROR! Invalid value input for Truncation Amount.')
+            print('ERROR! Invalid value input for Maximum Amount.')
 
 
     def changeQuickGranularity(self):
@@ -1722,8 +1722,8 @@ class OperateExchangeGUI:
         self.label_current_slope.config(text=' ' + str(self.OE.arrayOrderSettings['Slope']) + ' ')
         if self.row_17_button == 'Minimum Order Size':
             self.label_current_minimum_order_size.config(text=' ' + str(self.OE.arrayOrderSettings['Minimum Order Size']) + ' ')
-        elif self.row_17_button == 'Truncation Amount':
-            self.label_current_truncation_amount.config(text=' ' + str(self.OE.arrayOrderSettings['Truncation Amount']) + ' ')
+        elif self.row_17_button == 'Maximum Amount':
+            self.label_current_maximum_amount.config(text=' ' + str(self.OE.arrayOrderSettings['Maximum Amount']) + ' ')
         elif self.row_17_button == 'Quick Granularity':
             self.label_current_quick_granularity_intensity.config(text=' ' + str(self.OE.arrayOrderSettings['Quick Granularity Intensity']) + ' ')
             if self.OE.arrayOrderSettings['Quick Granularity Start %'] != 'default':
@@ -1810,7 +1810,7 @@ class OperateExchangeGUI:
         if setting_to_nudge in ['Price', 'Granularity', 'Spread', 'End Price']:
             default_multiplier = self.symbol_defaults[self.OE.orderSettings['Symbol']]['Nudge Button Multiplier']
             granularity_multiplier = 1
-            if setting_to_nudge == 'Granularity':
+            if (setting_to_nudge == 'Granularity') and (self.OE.orderSettings['Symbol'] != 'BTC/USD'):
                 granularity_multiplier = 10
             amount_to_nudge = amount_to_nudge * granularity_multiplier * default_multiplier
             if original_amount_to_nudge != amount_to_nudge:
