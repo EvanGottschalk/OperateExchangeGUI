@@ -160,6 +160,18 @@ The main function of the GUI is to customize and create "Array Orders". An Array
 
 `Update Slope` - Clicking this changes the `slope` of the Array Order to the the value input in the field on its left. The `slope` is an optional parameter that controls the slope of the line created by graphing the prices of the individual orders in the Array Order. When left at `1`, it will have no effect on the Array Order. Changing the `slope` will change the total `amount` of the order. A higher slope means the values of the individual orders in the Array Order will be larger and increase more rapidly between the starting `price` and the ending price. Likewise, a lower slope causes the size of orders to be lower, and increase more slowly from beginning to end. Modifying the slope is a great way to increase or decrease the overall value of an Array Order while maintaining the same ratios between individual orders. Users may also click the "nudge" buttons (e.g. `-1`, `+0.1`) to change the `slope` of the current Array Order by the corresponding value. The current `slope` is displayed between the "nudge" buttons.
 
+`Update Max Amount` / `Update Min Order` / `Update QG Intensity` - This row is currently a "testing" row. There are 3 different features that I have tried including in this location, but none of them have proven to be particularly useful. The particular button that is visible in this location depends on what the `row_17_button` variable is assigned to.
+
+1. `Maximum Amount` - This is a cap on the total amount of the array of orders. When it's active, more profitable individual orders are placed with higher priority than less profitable ones. Thus, using a `Maximum Amount` that's less than total `amount` allows users to execute only the most profitable portion of an Array Order.
+2. `Minimum Order Size` - This is the smallest any individual order is permitted to be in the Array Order. 
+3. `Quick Granularity Intensity` - When this value is greater than 0, the Array Order will group orders more closely together near the start of an Array Order, and group them more loosely near the end of an Array Order. The higher the intensity, the more closely earlier orders are grouped and the more spread out the other orders are. Using `Quick Granularity` increases the probability of closing more orders in a shorter period of time.
+
+`Change Style` - Clicking this displays a dropdown list of possible Array Order styles. The user can then click on the style of their choice to use that style. The current cryptocurrency `style` to be traded is dislpayed to the left of the button. There are currently 7 different styles:
+1. `Uniform` - 
+
+
+
+
 <!-- ROADMAP -->
 ## Roadmap
 
