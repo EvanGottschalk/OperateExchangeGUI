@@ -166,10 +166,14 @@ The main function of the GUI is to customize and create "Array Orders". An Array
 2. `Minimum Order Size` - This is the smallest any individual order is permitted to be in the Array Order. 
 3. `Quick Granularity Intensity` - When this value is greater than 0, the Array Order will group orders more closely together near the start of an Array Order, and group them more loosely near the end of an Array Order. The higher the intensity, the more closely earlier orders are grouped and the more spread out the other orders are. Using `Quick Granularity` increases the probability of closing more orders in a shorter period of time.
 
-`Change Style` - Clicking this displays a dropdown list of possible Array Order styles. The user can then click on the style of their choice to use that style. The current cryptocurrency `style` to be traded is dislpayed to the left of the button. There are currently 7 different styles:
-1. `Uniform` - 
-
-
+`Change Style` - Clicking this displays a dropdown list of possible Array Order styles. The user can then click on the style of their choice to use that style. An Array Order's "style" determines the shape formed by graphing the sizes against the prices of the orders in the array. The current `style` is dislpayed to the left of the button. There are 7 different styles:
+1. `Uniform` - This distributes the input `amount` across all orders evenly, forming a flat line when graphed.
+2. `Linear` - This distributes the input `amount` at a constantly increasing rate, starting with the smallest order at the staring `price` and the biggest order at the ending price. This forms a diagonal line when graphed.
+3. `Circular` - This distributes the input `amount` using the equation to graph a circle. This forms the bottom-right quarter of a circle when graphed.
+4. `Transposed Circular` - This is identical to a `Circular` Array Order, except the array starts with higher orders further into the circular shape, and skips the earliest and smallest orders. This forms a portion of the bottom-right quarter of a circle when graphed.
+5. `Parabolic` - This distributes the input `amount` at an exponentially increasing rate, starting with the smallest order at the staring `price` and the biggest order at the ending price. This forms half of a parabola when graphed.
+6. `Fibonacci` - This distributes the input `amount` at a cumulatively increasing rate using the formula for the Fibonacci sequence. This forms a steep half-parabola when graphed.
+7. `Multiplicative` - This style is customizable. It distributes the input `amount` at an exponentially increasing rate using the user's input `multiplicative_factor`. The larger the input `multiplicative_factor`, the more rapidly the prices in the Array Order increase. A `multiplicative_factor` 1 or larger forms a steep half-parabola when graphed. Below 1, the prices will increase much more slowly, and eventually start to decrease if the `multiplicative_factor` is low enough.
 
 
 <!-- ROADMAP -->
