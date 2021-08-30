@@ -160,7 +160,7 @@ The main function of the GUI is to customize and create "Array Orders". An Array
 
 `Update Slope` - Clicking this changes the `slope` of the Array Order to the the value input in the field on its left. The `slope` is an optional parameter that controls the slope of the line created by graphing the prices of the individual orders in the Array Order. When left at `1`, it will have no effect on the Array Order. Changing the `slope` will change the total `amount` of the order. A higher slope means the values of the individual orders in the Array Order will be larger and increase more rapidly between the starting `price` and the ending price. Likewise, a lower slope causes the size of orders to be lower, and increase more slowly from beginning to end. Modifying the slope is a great way to increase or decrease the overall value of an Array Order while maintaining the same ratios between individual orders. Users may also click the "nudge" buttons (e.g. `-1`, `+0.1`) to change the `slope` of the current Array Order by the corresponding value. The current `slope` is displayed between the "nudge" buttons.
 
-`Update Max Amount` / `Update Min Order` / `Update QG Intensity` - This row is currently a "testing" row. There are 3 different features that I have tried including in this location, but none of them have proven to be particularly useful. The particular button that is visible in this location depends on what the `row_17_button` variable is assigned to.
+`Update Max Amount` / `Update Min Order` / `Update QG Intensity` - This button is currently used for testing. There are 3 different features that I have tried including in this location, but none of them have proven to be particularly useful. The particular button that is visible in this location depends on what the `row_17_button` variable is assigned to.
 
 1. `Maximum Amount` - This is a cap on the total amount of the array of orders. When it's active, more profitable individual orders are placed with higher priority than less profitable ones. Thus, using a `Maximum Amount` that's less than total `amount` allows users to execute only the most profitable portion of an Array Order.
 2. `Minimum Order Size` - This is the smallest any individual order is permitted to be in the Array Order. 
@@ -175,6 +175,23 @@ The main function of the GUI is to customize and create "Array Orders". An Array
 6. `Fibonacci` - This distributes the input `amount` at a cumulatively increasing rate using the formula for the Fibonacci sequence. This forms a steep half-parabola when graphed.
 7. `Multiplicative` - This style is customizable. It distributes the input `amount` at an exponentially increasing rate using the user's input `multiplicative_factor`. The larger the input `multiplicative_factor`, the more rapidly the prices in the Array Order increase. A `multiplicative_factor` 1 or larger forms a steep half-parabola when graphed. Below 1, the prices will increase much more slowly, and eventually start to decrease if the `multiplicative_factor` is low enough.
 
+### Array Order Execute & Cancel Buttons
+
+`Preview Orders` - Clicking this allows the user to preview the features and appearance of a potential Array Order before executing the orders. Specifically, clicking this button will first use `OperateExchange` to calculate the distribution of amounts across the potential Array Order. Then, a graph of the orders in the Array Order will be displayed, and the the GUI interface will be updated with specific information about the potential Array Order, such as the prices of its largest and smallest orders.
+
+`Execute Orders` - Clicking this executes all of the orders in the chosen Array Order. They are executed one-by-one, staring with the smallest order at the starting `price` and ending with the largest order. The difference between the starting `price` and the price of the last order is equal to the chosen `spread` value.
+
+`Cancel All Orders` - Clicking this simultaneously cancels all of the orders the user has open on the account `OperateExchangeGUI` is currently connected to.
+
+### "- Active Orders -"
+
+`Refresh` - Clicking this will make space in the `"- Active Orders -"` section of the GUI by removing orders that have been canceled or fully closed.
+
+After creating an Array Order, information about it will be displayed in the "Active Orders" section of the GUI. Additionally, the information about each Array Order will also have its own set of buttons, which do the following:
+
+`Cancel` - Clicking this cancels the associated Array Order, one order at a time.
+
+`Rebuild` - Clicking this executes any orders in the original Array Order that are no longer active, whether it's because they were closed, canceled, or because they failed to even be executed in the first place.
 
 <!-- ROADMAP -->
 ## Roadmap
