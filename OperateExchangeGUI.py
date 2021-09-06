@@ -424,15 +424,16 @@ class OperateExchangeGUI:
                                                    text='   # of Orders   ')
         self.label_number_of_orders = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['Light Blue'], \
                                              padx=11, borderwidth=1, relief='solid', text=str(self.OE.arrayOrderParameters['Number of Orders']))
-    # The "Amount" section of the Order Settings displays the total array order amount, so it doesn't need to be repeated here
-##        self.label_total_amount_title = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
-##                                                   text=' Total Amount ')
-##        self.label_total_amount = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['Light Blue'], \
-##                                             padx=11, borderwidth=1, relief='solid', text=str(self.OE.arrayOrderParameters['Total Order Amount']))
-        self.label_entry_at_execution_title = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
-                                                   text='    Full Entry    ')
-        self.label_entry_at_execution = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['Light Blue'], \
-                                             padx=5, borderwidth=1, relief='solid', text=str(round(float(self.OE.arrayOrderParameters['Entry at Full Execution']), 2)))
+        self.label_total_amount_title = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
+                                                   text=' Total Amount ')
+        self.label_total_amount = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['Light Blue'], \
+                                             padx=11, borderwidth=1, relief='solid', text=str(self.OE.arrayOrderParameters['Total Order Amount']))
+# This label displays one's entry position were all of the orders in an Array Order to be filled
+# It has historically been unimportant, and may be removed
+##        self.label_entry_at_execution_title = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['White'], borderwidth=1, relief='solid', \
+##                                                   text='    Full Entry    ')
+##        self.label_entry_at_execution = tkinter.Label(self.GUI, font=self.title_font, bg=self.current_exchange_colors['Light Blue'], \
+##                                             padx=5, borderwidth=1, relief='solid', text=str(round(float(self.OE.arrayOrderParameters['Entry at Full Execution']), 2)))
 
 ## Create order creation widgets
     # Preview orders
@@ -931,18 +932,16 @@ class OperateExchangeGUI:
         self.label_min_amount.grid(column=1, row=33)
         self.label_max_amount_title.grid(padx=(0, 100), columnspan=1, column=2, row=32)
         self.label_max_amount.grid(padx=(0, 100), columnspan=1, column=2, row=33)
-        # Removed due to redundancy
-##        self.label_total_amount_title.grid(column=4, row=32)
-##        self.label_total_amount.grid(column=4, row=33)
-##        self.label_order_parameters_spacer_2.grid(columnspan=6, column=1, row=34)
         self.label_min_price_title.grid(padx=(00,0), columnspan=2, column=2, row=32)
         self.label_min_price.grid(padx=(00,0), columnspan=2, column=2, row=33)
         self.label_max_price_title.grid(padx=(30,0), columnspan=1, column=3, row=32)
         self.label_max_price.grid(padx=(30,0), columnspan=1, column=3, row=33)
         self.label_number_of_orders_title.grid(columnspan=1, column=4, row=32)
         self.label_number_of_orders.grid(columnspan=1, column=4, row=33)
-        self.label_entry_at_execution_title.grid(columnspan=2, column=5, row=32)
-        self.label_entry_at_execution.grid(columnspan=2, column=5, row=33)
+        self.label_total_amount_title.grid(columnspan=2, column=5, row=32)
+        self.label_total_amount.grid(columnspan=2, column=5, row=33)
+##        self.label_entry_at_execution_title.grid(columnspan=2, column=5, row=32)
+##        self.label_entry_at_execution.grid(columnspan=2, column=5, row=33)
         
 
 ## Add order creation widgets to grid
@@ -1673,9 +1672,8 @@ class OperateExchangeGUI:
         self.label_max_amount.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Highest Price Order Amount'])) + ' ')
         self.label_min_price.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Lowest Price Order Price'])) + ' ')
         self.label_min_amount.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Lowest Price Order Amount'])) + ' ')
-        # Removed due to redundancy
-        #self.label_total_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Total Order Amount']) + ' ')
-        self.label_entry_at_execution.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Entry at Full Execution'])) + ' ')
+        self.label_total_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Total Order Amount']) + ' ')
+##        self.label_entry_at_execution.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Entry at Full Execution'])) + ' ')
         self.label_number_of_orders.config(text=' ' + str(self.OE.arrayOrderParameters['Number of Orders']) + ' ')
         self.updateArraySettingsLabels()
         self.settings_have_changed_since_last_preview = False
@@ -1692,9 +1690,8 @@ class OperateExchangeGUI:
         self.label_max_amount.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Highest Price Order Amount'])) + ' ')
         self.label_min_price.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Lowest Price Order Price'])) + ' ')
         self.label_min_amount.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Lowest Price Order Amount'])) + ' ')
-        # Removed due to redundancy
-        #self.label_total_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Total Order Amount']) + ' ')
-        self.label_entry_at_execution.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Entry at Full Execution'])) + ' ')
+        self.label_total_amount.config(text=' ' + str(self.OE.arrayOrderParameters['Total Order Amount']) + ' ')
+##        self.label_entry_at_execution.config(text=' ' + str(self.OE.checkPriceInput(self.OE.arrayOrderParameters['Entry at Full Execution'])) + ' ')
         self.label_number_of_orders.config(text=' ' + str(self.OE.arrayOrderParameters['Number of Orders']) + ' ')
       # This is a price "ticker" that displays the current price of the currency you're trading
       # I commented it out because it slows the program down too much. But, I've been thinking about adding it as an option
@@ -2238,22 +2235,20 @@ class OperateExchangeGUI:
     def darkenArrayParameters(self):
         self.label_min_amount.config(bg=self.my_colors['Dark Gray'])
         self.label_max_amount.config(bg=self.my_colors['Dark Gray'])
-        # Removed due to redundancy
-        #self.label_total_amount.config(bg=self.my_colors['Dark Gray'])
         self.label_number_of_orders.config(bg=self.my_colors['Dark Gray'])
         self.label_min_price.config(bg=self.my_colors['Dark Gray'])
         self.label_max_price.config(bg=self.my_colors['Dark Gray'])
-        self.label_entry_at_execution.config(bg=self.my_colors['Dark Gray'])
+        self.label_total_amount.config(bg=self.my_colors['Dark Gray'])
+##        self.label_entry_at_execution.config(bg=self.my_colors['Dark Gray'])
 
     def lightenArrayParameters(self):
         self.label_min_amount.config(bg=self.current_exchange_colors['Light Blue'])
         self.label_max_amount.config(bg=self.current_exchange_colors['Light Blue'])
-        # Removed due to redundancy
-        #self.label_total_amount.config(bg=self.current_exchange_colors['Light Blue'])
         self.label_number_of_orders.config(bg=self.current_exchange_colors['Light Blue'])
         self.label_min_price.config(bg=self.current_exchange_colors['Light Blue'])
         self.label_max_price.config(bg=self.current_exchange_colors['Light Blue'])
-        self.label_entry_at_execution.config(bg=self.current_exchange_colors['Light Blue'])
+        self.label_total_amount.config(bg=self.current_exchange_colors['Light Blue'])
+##        self.label_entry_at_execution.config(bg=self.current_exchange_colors['Light Blue'])
 
 # This will create the OperateExchangeGUI class in a non-local scope, making it more secure
 if __name__ == "__main__":
