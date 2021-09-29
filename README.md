@@ -11,7 +11,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/EvanGottschalk/OperateExchangeGUI">
-    <img src="logo.png" alt="Logo" width="151" height="80">
+    <img src="logo.png" alt="Logo" width="250" height="130">
   </a>
 
   <h3 align="center">OperateExchangeGUI</h3>
