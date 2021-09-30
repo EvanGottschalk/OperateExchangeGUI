@@ -71,6 +71,10 @@
 
 * `Python 3.6`
 
+* `Pandas` (*optional; only necessary for charting*)
+
+* `Matplotlib` (*optional; only necessary for charting*)
+
 * [`CCXT`](https://github.com/ccxt/ccxt) - The fantastic `CCXT` library is critical to this program. Huge thanks to [@kroitor](https://github.com/kroitor) and the many other `CCXT` contributors that made this program possible.
 
 * [`OperateExchange`](https://github.com/EvanGottschalk/OperateExchange) - This program is the brains behind `OperateExchangeGUI`. The buttons in the GUI all send commands to `OperateExchange`, which then interprets them, checks them, and finally executes them via `ConnectToExchange`. You can read more about it here: [https://github.com/EvanGottschalk/OperateExchange](https://github.com/EvanGottschalk/OperateExchange)
