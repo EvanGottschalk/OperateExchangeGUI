@@ -11,7 +11,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/EvanGottschalk/OperateExchangeGUI">
-    <img src="logo.png" alt="Logo" width="250" height="130">
+    <img src="logo.png" alt="Logo" width="151" height="80">
   </a>
 
   <h3 align="center">OperateExchangeGUI</h3>
@@ -85,6 +85,8 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
+
+`OperateExchangeGUI` is easy to get up and running. Let [me](https://github.com/EvanGottschalk) know if you have any trouble! I'm always trying to make installation as smooth as possible.
 
 ### Prerequisites
 
