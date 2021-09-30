@@ -11,7 +11,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/EvanGottschalk/OperateExchangeGUI">
-    <img src="logo.png" alt="Logo" width="151" height="80">
+    <img src="logo.png" alt="Logo" width="250" height="130">
   </a>
 
   <h3 align="center">OperateExchangeGUI</h3>
@@ -98,7 +98,7 @@ Before using `OperateExchangeGUI`, you must first obtain an API key and secret f
     ```
     pip install -r requirements.txt
     ```
-    
+
 2. Download the `.py` files from this repository (`OperateExchangeGUI.py`,`OperateExchange.py`, `ConnectToExchange.py`, `GetCurrentTime.py`, `QuadraticFormula.py`, and optionally `AudioPlayer.py`)
 
 3. In the same folder as `ConnectToExchange.py`, create a `.txt` file to store your API information. Its name should start with the exchange you are using, followed by an underscore, followed by the name of the account you're using, and ending with `_API.txt`.
